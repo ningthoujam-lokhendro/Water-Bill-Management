@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/layout">
+<head>
+</head>
+<body>
+	
+	<div class="container" layout:fragment="content">
+	  <div class="jumbotron">
+	    <h1>Search Result</h1> 
+	    
+	    <table class="table table-bordered">
+	     <thead>
+	      <tr>
+	      	<th>Sl No</th>
+	      	<th>Customer Name</th>
+	      	<th>Connection Type</th>
+	        <th>Created on</th>
+	        <th>Mobile Number</th>
+	        <th>LandLine Number</th>
+	        <th>Ward Number</th>
+	        <th>Patta Number</th>
+	        <th>Address</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      <tr th:each="cus,iterationStatus  : ${customer}">
+	      	<td th:text="${iterationStatus.count}">1</td>
+	        <td th:text="${cus.firstName}" />
+	        <td th:text="${cus.connectionType.type}" />
+	        <td th:text="${cus.creationDate}" />
+	        <td th:text="${cus.mobileNumber}" />
+	        <td th:text="${cus.landLineNumber}" />
+	        <td th:text="${cus.wardNumber}" />
+	        <td th:text="${cus.pattaNumber}" />
+	        <td th:text="${cus.address}" />
+	      </tr>
+	      </tbody>
+	    </table>
+	    
+	    <a href="/create" role="button" class="btn btn-lg btn-success">
+	    	<span class="glyphicon glyphicon-plus"></span>
+	    	Create Another
+	    </a>
+	  </div>
+	 </div>
+  </body>
+</html>

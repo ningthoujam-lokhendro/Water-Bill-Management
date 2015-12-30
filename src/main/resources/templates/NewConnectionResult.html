@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/layout">
+<head>
+    
+</head>
+  <body>
+  
+  	<div class="container" layout:fragment="content">
+	  <div class="jumbotron">
+	    <h1>Connection Created</h1> 
+	    <p th:text=" 'Customer Name :' + ${customer.firstName} + ' ' + ${customer.lastName} "/>
+	    <p th:text=" 'Connection Type : ' + ${customer.connectionType.type}" />
+	    <p th:text=" 'Created on : ' + ${customer.creationDate} " />
+	    <p th:text=" 'Mobile Number : ' + ${customer.mobileNumber} " />
+	    <p th:text=" 'Landline Number : ' + ${customer.landLineNumber} " />
+	    <p th:text=" 'Ward Number : ' + ${customer.wardNumber} " />
+	    <p th:text=" 'Patta Number : ' + ${customer.pattaNumber} " />
+	    <p th:text=" 'Address : ' + ${customer.address} " />
+	    <p th:text=" 'Address : ' + ${customer} " />
+	    
+	    <a href="/create" role="button" class="btn btn-lg btn-success">
+	    	<span class="glyphicon glyphicon-plus"></span>
+	    	Create Another
+	    </a>
+	  </div>
+	 </div>
+
+  </body>
+</html>

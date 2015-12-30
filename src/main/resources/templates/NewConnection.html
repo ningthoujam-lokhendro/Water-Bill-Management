@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/layout">
+<head>
+</head>
+  <body>
+    
+    <div layout:fragment="content">
+    <form class="form-horizontal" action="#" th:action="@{/create}" method="post">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>New Connection</legend>
+		
+		<!-- Multiple Radios -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="radios">Connection Type</label>
+		  <div class="col-md-4" >
+		  	<div class="radio" >
+		  		<label th:each="elem : ${T(com.ningzeta.wbm.util.ConnType).values()}" class="radio-inline" th:for="${elem}">
+			      <input type="radio" th:text="${elem}" name="radios" th:value="${elem}"
+			      			th:checked="${elem == T(com.ningzeta.wbm.util.ConnType).HOME} ? 'checked'" 
+			      			th:field="*{conntypewrapper.type}"/>
+			    </label>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">First Name</label>  
+		  <div class="col-md-4">
+		  <input th:field="*{customer.firstName}" type="text" class="form-control input-md" required="" />
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">Last Name</label>  
+		  <div class="col-md-4">
+		  <input th:field="*{customer.lastName}" type="text" class="form-control input-md" required="" />
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">Mobile Number</label>  
+		  <div class="col-md-2">
+		  <input th:field="*{customer.mobileNumber}" type="text" placeholder="xxxxxxxxx" class="form-control input-md" required="" />
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">Landline Number</label>  
+		  <div class="col-md-2">
+		  <input th:field="*{customer.landLineNumber}" type="text" placeholder="03879 xxxxxxxx" class="form-control input-md" />
+		    
+		  </div>
+		</div>
+
+	<!-- Select Basic -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="selectbasic">Ward Number</label>
+	  <div class="col-md-2">
+	    <select th:field="*{customer.wardNumber}" class="form-control">
+	      <option value="1">1</option>
+	      <option value="2">2</option>
+	      <option value="3">3</option>
+	      <option value="4">4</option>
+	      <option value="5">5</option>
+	      <option value="6">6</option>
+	      <option value="7">7</option>
+	      <option value="8">8</option>
+	      <option value="9">9</option>
+	      <option value="10">10</option>
+	      <option value="11">11</option>
+	      <option value="12">12</option>
+	      <option value="13">13</option>
+	    </select>
+	  </div>
+	</div>
+	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textinput">Patta Number</label>  
+	  <div class="col-md-2">
+	  <input th:field="*{customer.pattaNumber}" type="text" placeholder="" class="form-control input-md" required="" />
+	    
+	  </div>
+	</div>
+	
+	<!-- Textarea -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="textarea">Address</label>
+	  <div class="col-md-4">                     
+	    <textarea th:field="*{customer.address}" class="form-control" id="textarea" name="textarea"></textarea>
+	  </div>
+	</div>
+	
+	<!-- Button (Double) -->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="button1id"></label>
+	  <div class="col-md-8">
+	    <button id="button1id" name="button1id" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span>
+	    	Create Connection
+	    </button>
+	    <button id="button2id" name="button2id" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh"></span>
+	    	Reset
+	    </button>
+	  </div>
+	</div>
+	</fieldset>
+	</form>
+	</div>
+	
+   </body>
+</html>
