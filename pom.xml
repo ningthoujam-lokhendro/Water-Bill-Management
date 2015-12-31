@@ -6,7 +6,7 @@
 	<groupId>com.ningzeta.wbm</groupId>
 	<artifactId>Water-Bill-Management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>Water Bill Management</name>
 	<description>Demo project for Spring Boot</description>
@@ -106,6 +106,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
