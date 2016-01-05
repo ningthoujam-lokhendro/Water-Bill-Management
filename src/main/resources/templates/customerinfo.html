@@ -8,7 +8,7 @@
   
   	<div class="container" layout:fragment="content">
 	  <div class="jumbotron">
-	    <h1>Connection Created</h1> 
+	    <h1>Customer Information</h1> 
 	    <p th:text=" 'Customer Name :' + ${customer.firstName} + ' ' + ${customer.lastName} "/>
 	    <p th:text=" 'Connection Type : ' + ${customer.connectionType.type}" />
 	    <p th:text=" 'Created on : ' + ${customer.creationDate} " />
@@ -17,12 +17,25 @@
 	    <p th:text=" 'Ward Number : ' + ${customer.wardNumber} " />
 	    <p th:text=" 'Patta Number : ' + ${customer.pattaNumber} " />
 	    <p th:text=" 'Address : ' + ${customer.address} " />
-	    <p th:text=" 'Address : ' + ${customer} " />
 	    
-	    <a href="/create" role="button" class="btn btn-lg btn-success">
+	    <a th:href="@{/update(id=${customer.id})}" role="button" class="btn btn-lg btn-danger">
+	    	<span class="glyphicon glyphicon-minus-sign"></span>
+	    	Edit
+	    </a>
+	    
+	    <a th:href="@{/delete(id=${customer.id})}" role="button" class="btn btn-lg btn-danger" 
+	    	onclick="return confirm('Are you sure you want to Remove?');">
+	    	<span class="glyphicon glyphicon-minus-sign"></span>
+	    	Delete
+	    </a>
+	    
+	    <a th:href="@{/create}" role="button" class="btn btn-lg btn-success">
 	    	<span class="glyphicon glyphicon-plus"></span>
 	    	Create Another
 	    </a>
+	    
+	    <br/>
+	    <p th:text="${customer}"/>
 	  </div>
 	 </div>
 

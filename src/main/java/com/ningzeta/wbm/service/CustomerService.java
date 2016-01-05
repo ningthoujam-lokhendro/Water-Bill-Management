@@ -31,16 +31,14 @@ public class CustomerService {
 		return (List<Customer>) customerRepo.findAll();
 	}
 
-	public void createNew(Customer customer, ConnType connType) {
+	public void createNew(Customer customer, ConnType connType, Meter meter) {
 		
 		// get the connection type
 		ConnectionType conTypeObj = connTypeService.findByType(connType);
 		customer.setConnectionType(conTypeObj);
 		
 		// create Meter Single, Multiple COnnection get param from form and add.
-		Meter meter = new Meter();
 		meter.setCustomer(customer);
-		
 		
 		Set<Meter> meterMap = new HashSet<Meter>();
 		meterMap.add(meter);
@@ -56,8 +54,26 @@ public class CustomerService {
 		//find the customer and update it.
 	}
 	
-	public Customer findByFirstName(String firstName){
+	public List<Customer> findByFirstName(String firstName){
 		
 		return customerRepo.findByFirstNameLike(firstName);
+	}
+	
+	public List<Customer> findByLastName(String lastName){
+		
+		return customerRepo.findByLastNameLike(lastName);
+	}
+	
+	public List<Customer> findByWardNo(int wardNumber) {
+		return customerRepo.findByWardNumber(wardNumber);
+	}
+
+	public Customer findById(Long id) {
+		// TODO Auto-generated method stub
+		return customerRepo.findOne(id);
+	}
+	
+	public void remove(Long id) {
+		customerRepo.delete(id);
 	}
 }

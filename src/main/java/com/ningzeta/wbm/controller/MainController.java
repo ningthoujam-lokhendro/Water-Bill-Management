@@ -1,15 +1,18 @@
 package com.ningzeta.wbm.controller;
 
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.ningzeta.wbm.model.Customer;
+import com.ningzeta.wbm.model.Meter;
 import com.ningzeta.wbm.service.CustomerService;
 import com.ningzeta.wbm.util.ConnTypeWrapper;
 
@@ -22,33 +25,68 @@ public class MainController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String createForm(Model model) {
 		model.addAttribute("customer", new Customer());
+		model.addAttribute("meter", new Meter());
 		model.addAttribute("conntypewrapper", new ConnTypeWrapper());
 		return "NewConnection";
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@ModelAttribute Customer customer,
-							   @ModelAttribute ConnTypeWrapper connTypeWrapper,
-								Model model) {
+						 @ModelAttribute ConnTypeWrapper connTypeWrapper,
+						 @ModelAttribute Meter meter,
+						 Model model) {
 		
 		model.addAttribute("conntypewrapper", connTypeWrapper);
 		customer.setCreationDate(new Date());
-		customerService.createNew(customer, connTypeWrapper.getEnumType());
+		customerService.createNew(customer, connTypeWrapper.getEnumType(), meter);
 		model.addAttribute("customer", customerService.findByFirstName(customer.getFirstName()));
-		return "NewConnectionResult";
+		return "customerinfo";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search() {
+	public String search(Model model) {
+		model.addAttribute("customer", new Customer());
 		return "search";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params="action=all")
 	public String getAll(Model model) {
-		model.addAttribute("customer", this.customerService.getAll());
+		log.info("Request Received for all");
+		model.addAttribute("customers", this.customerService.getAll());
 		return "SearchResult";
 		
 	}
+	
+	@RequestMapping(value = "/search/customer/{id}")
+	public String view(@PathVariable Long id, Model model) {
+		model.addAttribute("customer", this.customerService.findById(id));
+		return "customerinfo";
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String search(@RequestParam("lastname") String lastName,
+						 @RequestParam("firstname") String firstName,
+						 @RequestParam("wardnumber") int wardNumber,
+						 Model model) {
+		
+		if(lastName.length() > 0 )
+			model.addAttribute("customers", this.customerService.findByLastName(lastName));
+		else if(firstName.length() > 0)
+			model.addAttribute("customers", this.customerService.findByFirstName(firstName));
+		else if(wardNumber > 0 && wardNumber < 13)
+			model.addAttribute("customers", this.customerService.findByWardNo(wardNumber));
+		else
+			model.addAttribute("customer", new Customer());
+		
+		return "SearchResult";
+	}
+	
+	@RequestMapping(value = "/delete")
+	public String delete(@RequestParam("id") Long id) {
+		this.customerService.remove(id);
+		return "welcome";
+	}
+	
 	
 	@RequestMapping(value="/")
 	public String welcome() {

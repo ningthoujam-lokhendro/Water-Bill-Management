@@ -24,9 +24,9 @@
 	      </tr>
 	      </thead>
 	      <tbody>
-	      <tr th:each="cus,iterationStatus  : ${customer}">
-	      	<td th:text="${iterationStatus.count}">1</td>
-	        <td th:text="${cus.firstName}" />
+	      <tr th:each="cus,iterationStatus  : ${customers}">
+	      	<td th:text="${iterationStatus.count}" />
+	        <td><a th:href="${'/search/customer/'+cus.id}" th:text="${cus.firstName} + ' ' + ${cus.lastName}"></a></td>
 	        <td th:text="${cus.connectionType.type}" />
 	        <td th:text="${cus.creationDate}" />
 	        <td th:text="${cus.mobileNumber}" />

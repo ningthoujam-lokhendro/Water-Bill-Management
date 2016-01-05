@@ -28,6 +28,14 @@
 
 		<!-- Text input-->
 		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">Meter Id</label>  
+		  <div class="col-md-4">
+		  	<input th:field="*{meter.meterId}" type="text" class="form-control input-md" required="" />		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">First Name</label>  
 		  <div class="col-md-4">
 		  <input th:field="*{customer.firstName}" type="text" class="form-control input-md" required="" />
