@@ -49,6 +49,11 @@ public class CustomerService {
 		
 	}
 	
+	public void update(Customer customer) {
+		
+		customerRepo.save(customer);
+	}
+	
 	public void update() {
 		
 		//find the customer and update it.
@@ -75,5 +80,13 @@ public class CustomerService {
 	
 	public void remove(Long id) {
 		customerRepo.delete(id);
+	}
+	
+	public Customer findbyPattaNumber(String pattaNumber) {
+		return this.customerRepo.findByPattaNumber(pattaNumber);
+	}
+	
+	public Meter findByMeterId(String meterId) {
+		return this.meterService.findByMeterId(meterId);
 	}
 }

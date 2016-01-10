@@ -1,5 +1,8 @@
 package com.ningzeta.wbm.controller;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +42,35 @@ public class MainController {
 		model.addAttribute("conntypewrapper", connTypeWrapper);
 		customer.setCreationDate(new Date());
 		customerService.createNew(customer, connTypeWrapper.getEnumType(), meter);
-		model.addAttribute("customer", customerService.findByFirstName(customer.getFirstName()));
+		model.addAttribute("customer", this.customerService.findbyPattaNumber(customer.getPattaNumber()));
+		Meter m = this.customerService.findByMeterId(meter.getMeterId());
+		model.addAttribute("meter", m);
 		return "customerinfo";
 	}
 	
+	@RequestMapping(value = "/update")
+	public String update(@RequestParam("id") Long id, Model model) {
+		Customer customer = this.customerService.findById(id);
+		model.addAttribute("customer", customer);
+		model.addAttribute("meter", customer.getMeter());
+		return "update";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute Customer customer,
+						 @ModelAttribute ConnTypeWrapper connTypeWrapper,
+						 @ModelAttribute Meter meter,
+						 Model model) {
+		
+		Customer fetchCus = this.customerService.findById(customer.getId());
+		merge(customer, fetchCus);
+		model.addAttribute("conntypewrapper", fetchCus.getConnectionType());
+		customerService.update(fetchCus);
+		model.addAttribute("customer", fetchCus);
+		model.addAttribute("meter", fetchCus.getMeter());
+		return "customerinfo";
+	}
+
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(Model model) {
 		model.addAttribute("customer", new Customer());
@@ -59,7 +87,9 @@ public class MainController {
 	
 	@RequestMapping(value = "/search/customer/{id}")
 	public String view(@PathVariable Long id, Model model) {
-		model.addAttribute("customer", this.customerService.findById(id));
+		Customer customer = this.customerService.findById(id);
+		model.addAttribute("customer", customer);
+		model.addAttribute("meter", customer.getMeter());
 		return "customerinfo";
 	}
 	
@@ -67,9 +97,12 @@ public class MainController {
 	public String search(@RequestParam("lastname") String lastName,
 						 @RequestParam("firstname") String firstName,
 						 @RequestParam("wardnumber") int wardNumber,
+						 @RequestParam("pattanumber") String pattaNumber,
 						 Model model) {
 		
-		if(lastName.length() > 0 )
+		if(pattaNumber.length() > 0)
+			model.addAttribute("customers", this.customerService.findbyPattaNumber(pattaNumber));
+		else if(lastName.length() > 0 )
 			model.addAttribute("customers", this.customerService.findByLastName(lastName));
 		else if(firstName.length() > 0)
 			model.addAttribute("customers", this.customerService.findByFirstName(firstName));
@@ -87,6 +120,25 @@ public class MainController {
 		return "welcome";
 	}
 	
+	/**
+	 * @param customer
+	 * @param fetchCus
+	 */
+	private void merge(Customer customer, Customer fetchCus) {
+		String address = customer.getAddress();
+		String landLine = customer.getLandLineNumber();
+		String mobile = customer.getMobileNumber();
+		int wardNumber = customer.getWardNumber();
+		
+		if( !address.isEmpty() || address.length() != 0 )
+			fetchCus.setAddress(address);
+		if( landLine.isEmpty() || landLine.length() != 0 )
+			fetchCus.setLandLineNumber(landLine);
+		if (mobile.isEmpty() || mobile.length() != 0 )
+			fetchCus.setMobileNumber(mobile);
+		if(wardNumber > 0 && wardNumber <14)
+			fetchCus.setWardNumber(wardNumber);
+	}
 	
 	@RequestMapping(value="/")
 	public String welcome() {

@@ -1,5 +1,6 @@
 package com.ningzeta.wbm.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +23,10 @@ import com.ningzeta.wbm.util.ConnType;
 @Table(name = "CONNECTION_TYPE", uniqueConstraints = {
 	@UniqueConstraint(columnNames = "TYPE", name = "TYPE_IDX")
 })
-public class ConnectionType {
+public class ConnectionType implements Serializable{
 	
+	private static final long serialVersionUID = 3310176177974128234L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "CONNECTION_TYPE_SEQ")
 	@SequenceGenerator(name = "CONNECTION_TYPE_SEQ", sequenceName = "CONNECTION_TYPE_SEQ")
@@ -35,9 +38,6 @@ public class ConnectionType {
 	
 	@Column(name = "RATE",nullable = false)
 	private int rate;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "connectionType")
-	private Set<Customer> connections = new HashSet<Customer>(0);
 
 	@Override
 	public String toString() {
@@ -94,14 +94,6 @@ public class ConnectionType {
 
 	public void setRate(int rate) {
 		this.rate = rate;
-	}
-
-	public Set<Customer> getConnections() {
-		return connections;
-	}
-
-	public void setConnections(Set<Customer> connections) {
-		this.connections = connections;
 	}
 
 }

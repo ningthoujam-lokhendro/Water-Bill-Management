@@ -6,4 +6,7 @@ import com.ningzeta.wbm.model.Meter;
 
 public interface MeterRepository extends JpaRepository<Meter, Long>{
 
+	
+	Meter findByMeterId(String meterId);
+
 }

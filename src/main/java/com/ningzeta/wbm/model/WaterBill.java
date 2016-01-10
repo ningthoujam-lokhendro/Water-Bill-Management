@@ -47,7 +47,7 @@ public class WaterBill implements Serializable{
 	private int amountDue;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_BILL_STATUS", nullable = false, 
+	@JoinColumn(name = "REF_BILL_STATUS", nullable = false, referencedColumnName = "STATUS",
 		foreignKey = @ForeignKey(name = "FK_BILL_STATUS"))
 	private BillStatus status;
 	

@@ -2,28 +2,21 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="fragments/layout">
 <head>
+    
 </head>
   <body>
-    
-    <div layout:fragment="content">
-    <form class="form-horizontal" action="#" th:action="@{/create}" method="post">
-		<fieldset>
-		
+  
+  	<div class="container" layout:fragment="content">
+  	<form class="form-horizontal" action="#" th:action="@{/update}" method="post">
+		<input type="hidden" th:placeholder="${customer.id}" th:field="*{customer.id}" />
 		<!-- Form Name -->
-		<legend>New Connection</legend>
-		
+		<legend>Update Customer</legend>
+		<fieldset disabled="disabled">
 		<!-- Multiple Radios -->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="radios">Connection Type</label>
 		  <div class="col-md-4" >
-		  	<div class="radio" >
-		  		<label th:each="elem : ${T(com.ningzeta.wbm.util.ConnType).values()}" class="radio-inline" th:for="${elem}">
-			      <input type="radio" th:text="${elem}" name="radios" th:value="${elem}"
-			      			th:checked="${elem == T(com.ningzeta.wbm.util.ConnType).HOME} ? 'checked'" 
-			      			th:field="*{conntypewrapper.type}"
-			      			required="" />
-			    </label>
-			</div>
+		  	<input th:placeholder="${customer.connectionType.type}" type="text" class="form-control input-md" />
 		  </div>
 		</div>
 
@@ -31,7 +24,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">Meter Id</label>  
 		  <div class="col-md-4">
-		  	<input th:field="*{meter.meterId}" type="text" class="form-control input-md" required="" />		    
+		  	<input th:each="m : ${meter}" th:placeholder="${m.meterId}" type="text" class="form-control input-md" />		    
 		  </div>
 		</div>
 		
@@ -39,8 +32,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">First Name</label>  
 		  <div class="col-md-4">
-		  <input th:field="*{customer.firstName}" type="text" class="form-control input-md" required="" />
-		    
+		  	<input th:placeholder="${customer.firstName}" type="text" class="form-control input-md" />
 		  </div>
 		</div>
 		
@@ -48,17 +40,16 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">Last Name</label>  
 		  <div class="col-md-4">
-		  <input th:field="*{customer.lastName}" type="text" class="form-control input-md" required="" />
-		    
+		  	<input th:placeholder="${customer.lastName}" type="text" class="form-control input-md" />
 		  </div>
 		</div>
-		
+		</fieldset> <!-- disable fieldset end-->
+		<fieldset>
 		<!-- Text input-->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">Mobile Number</label>  
 		  <div class="col-md-2">
-		  <input th:field="*{customer.mobileNumber}" type="text" placeholder="xxxxxxxxx" class="form-control input-md" required="" />
-		    
+		  	<input th:field="*{customer.mobileNumber}" type="text" th:placeholder="${customer.mobileNumber}" class="form-control input-md" required="" />
 		  </div>
 		</div>
 		
@@ -66,7 +57,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="textinput">Landline Number</label>  
 		  <div class="col-md-2">
-		  <input th:field="*{customer.landLineNumber}" type="text" placeholder="03879 xxxxxxxx" class="form-control input-md" />
+		  <input th:field="*{customer.landLineNumber}" type="text" th:placeholder="${customer.landLineNumber}" class="form-control input-md" />
 		    
 		  </div>
 		</div>
@@ -97,7 +88,7 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textinput">Patta Number</label>  
 	  <div class="col-md-2">
-	  <input th:field="*{customer.pattaNumber}" type="text" placeholder="" class="form-control input-md" required="" />
+	  <input th:field="*{customer.pattaNumber}" disabled="disabled" type="text" th:placeholder="${customer.pattaNumber}" class="form-control input-md" required="" />
 	    
 	  </div>
 	</div>
@@ -106,7 +97,7 @@
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="textarea">Address</label>
 	  <div class="col-md-4">                     
-	    <textarea th:field="*{customer.address}" class="form-control" id="textarea" name="textarea"></textarea>
+	    <textarea th:field="*{customer.address}" class="form-control" th:placeholder="${customer.address}" id="textarea" name="textarea"></textarea>
 	  </div>
 	</div>
 	
@@ -115,7 +106,7 @@
 	  <label class="col-md-4 control-label" for="button1id"></label>
 	  <div class="col-md-8">
 	    <button id="button1id" name="button1id" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span>
-	    	Create Connection
+	    	Update Connection
 	    </button>
 	    <button id="button2id" name="button2id" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh"></span>
 	    	Reset
@@ -124,7 +115,7 @@
 	</div>
 	</fieldset>
 	</form>
-	</div>
-	
-   </body>
+	 </div>
+
+  </body>
 </html>

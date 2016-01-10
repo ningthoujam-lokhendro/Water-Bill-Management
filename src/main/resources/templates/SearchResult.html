@@ -8,11 +8,13 @@
 	<div class="container" layout:fragment="content">
 	  <div class="jumbotron">
 	    <h1>Search Result</h1> 
+	   </div>
 	    
-	    <table class="table table-bordered">
+	    <table class="table table-bordered table-striped">
 	     <thead>
 	      <tr>
 	      	<th>Sl No</th>
+	      	<th>Connection ID</th>
 	      	<th>Customer Name</th>
 	      	<th>Connection Type</th>
 	        <th>Created on</th>
@@ -25,14 +27,15 @@
 	      </thead>
 	      <tbody>
 	      <tr th:each="cus,iterationStatus  : ${customers}">
-	      	<td th:text="${iterationStatus.count}" />
+	      	<td class="text-center" th:text="${iterationStatus.count}" />
+	      	<td class="text-center" th:text="${cus.customerId}" />
 	        <td><a th:href="${'/search/customer/'+cus.id}" th:text="${cus.firstName} + ' ' + ${cus.lastName}"></a></td>
 	        <td th:text="${cus.connectionType.type}" />
-	        <td th:text="${cus.creationDate}" />
-	        <td th:text="${cus.mobileNumber}" />
-	        <td th:text="${cus.landLineNumber}" />
-	        <td th:text="${cus.wardNumber}" />
-	        <td th:text="${cus.pattaNumber}" />
+	        <td class="text-center" th:text="${cus.creationDate}" />
+	        <td class="text-center" th:text="${cus.mobileNumber}" />
+	        <td class="text-center" th:text="${cus.landLineNumber}" />
+	        <td class="text-center" th:text="${cus.wardNumber}" />
+	        <td class="text-center" th:text="${cus.pattaNumber}" />
 	        <td th:text="${cus.address}" />
 	      </tr>
 	      </tbody>
@@ -43,6 +46,5 @@
 	    	Create Another
 	    </a>
 	  </div>
-	 </div>
   </body>
 </html>

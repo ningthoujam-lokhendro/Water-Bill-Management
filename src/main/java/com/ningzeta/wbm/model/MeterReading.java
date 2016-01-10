@@ -36,8 +36,8 @@ public class MeterReading implements Serializable{
 	int value;
 	
 	@ManyToOne(fetch =FetchType.EAGER)
-	@JoinColumn(name = "REF_METER", nullable = false, 
-		foreignKey = @ForeignKey(name = "FK_METER"))
+	@JoinColumn(name = "METER_ID", nullable = false, referencedColumnName = "METER_ID",
+			foreignKey = @ForeignKey(name = "FK_METER_ID"))
 	Meter meter;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "meterReading")

@@ -17,4 +17,8 @@ public class MetersService {
 	public void save(Meter meter){
 		meterRepository.save(meter);
 	}
+
+	public Meter findByMeterId(String meterId) {
+		return this.meterRepository.findByMeterId(meterId);
+	}
 }

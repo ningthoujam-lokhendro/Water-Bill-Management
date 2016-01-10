@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,9 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "METER")
+@Table(name = "METER", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "METER_ID", name = "METER_ID_IDX")
+})
 public class Meter implements Serializable{
 	
 	private static final long serialVersionUID = 8824857822189005238L;
@@ -32,11 +36,11 @@ public class Meter implements Serializable{
 	private String meterId;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_CUSTOMER", nullable = false, 
-		foreignKey = @ForeignKey(name = "FK_CUSTOMER"))
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false, referencedColumnName="ID",
+			foreignKey = @ForeignKey(name = "FK_CUSTOMER_ID"))
 	private Customer customer;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "meter")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "meter", cascade=CascadeType.ALL)
 	private Set<MeterReading> meterReading = new HashSet<MeterReading>(0);
 
 	@Override

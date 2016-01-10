@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -68,11 +70,11 @@ public class Customer implements Serializable{
 	private Date creationDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_CONNECTION_TYPE", nullable = false,
-		foreignKey = @ForeignKey(name = "FK_CONNECTION_TYPE"))
+	@JoinColumn(name = "CONNECTION_TYPE", nullable = false, referencedColumnName="TYPE",
+			foreignKey = @ForeignKey(name = "FK_CONNECTION_TYPE"))
 	ConnectionType connectionType;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer" )
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL )
 	Set<Meter> meter = new HashSet<Meter>(0);
 
 	public Set<Meter> getMeter() {
