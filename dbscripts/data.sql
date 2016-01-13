@@ -1,7 +1,7 @@
 INSERT INTO `connection_type`
-(`id`,`RATE`,`TYPE`) VALUES (1,10,'HOME');
+(`id`,`RATE`,`TYPE`,`RENTAL`) VALUES (1,10,'HOME',100);
 INSERT INTO `connection_type`
-(`id`,`RATE`,`TYPE`) VALUES (2,20,'COMMERCIAL');
+(`id`,`RATE`,`TYPE`,`RENTAL`) VALUES (2,20,'COMMERCIAL',150);
 
 INSERT INTO `bill_status`
 (`id`,`STATUS`) VALUES (1,'DUE');

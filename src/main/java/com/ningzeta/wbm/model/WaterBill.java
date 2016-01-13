@@ -41,15 +41,34 @@ public class WaterBill implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DUE_DATE", nullable = false)
-	private Date paymentDue;
+	private Date dueDate;
 	
 	@Column(name = "AMOUNT_DUE", nullable = false)
 	private int amountDue;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_BILL_STATUS", nullable = false, referencedColumnName = "STATUS",
+	@Column(name = "PREVIOUS_DUE")
+	private int previousDue;
+	
+	@Column(name = "NET_BILL_AMOUNT")
+	private int netBillAmount;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BILL_STATUS", nullable = false, referencedColumnName = "STATUS",
 		foreignKey = @ForeignKey(name = "FK_BILL_STATUS"))
 	private BillStatus status;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "waterBill")
+	private Set<Payment> payment = new HashSet<Payment>(0);
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "METER_READING", nullable = false, referencedColumnName = "id",
+		foreignKey = @ForeignKey(name = "FK_METER_READING"))
+	MeterReading meterReading;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false, referencedColumnName = "id",
+		foreignKey = @ForeignKey(name = "FK_CUSTOMER"))
+	Customer customer;
 	
 	public BillStatus getStatus() {
 		return status;
@@ -75,21 +94,13 @@ public class WaterBill implements Serializable{
 		this.meterReading = meterReading;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "waterBill")
-	private Set<Payment> payment = new HashSet<Payment>(0);
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_METER_READING", nullable = false, 
-		foreignKey = @ForeignKey(name = "FK_METER_READING"))
-	MeterReading meterReading;
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amountDue;
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((paymentDue == null) ? 0 : paymentDue.hashCode());
+		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
 		result = prime * result + ((periodFrom == null) ? 0 : periodFrom.hashCode());
 		result = prime * result + ((periodTo == null) ? 0 : periodTo.hashCode());
 		return result;
@@ -108,10 +119,10 @@ public class WaterBill implements Serializable{
 			return false;
 		if (id != other.id)
 			return false;
-		if (paymentDue == null) {
-			if (other.paymentDue != null)
+		if (dueDate == null) {
+			if (other.dueDate != null)
 				return false;
-		} else if (!paymentDue.equals(other.paymentDue))
+		} else if (!dueDate.equals(other.dueDate))
 			return false;
 		if (periodFrom == null) {
 			if (other.periodFrom != null)
@@ -150,12 +161,12 @@ public class WaterBill implements Serializable{
 		this.periodTo = periodTo;
 	}
 
-	public Date getPaymentDue() {
-		return paymentDue;
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setPaymentDue(Date paymentDue) {
-		this.paymentDue = paymentDue;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public int getAmountDue() {
@@ -169,7 +180,37 @@ public class WaterBill implements Serializable{
 	@Override
 	public String toString() {
 		return "WaterBill [id=" + id + ", periodFrom=" + periodFrom + ", periodTo=" + periodTo + ", paymentDue="
-				+ paymentDue + ", amountDue=" + amountDue + "]";
+				+ dueDate + ", amountDue=" + amountDue + "]";
+	}
+
+	public int getPreviousDue() {
+		return previousDue;
+	}
+
+	public void setPreviousDue(int previousDue) {
+		this.previousDue = previousDue;
+	}
+
+	public int getNetBillAmount() {
+		return netBillAmount;
+	}
+
+	public void setNetBillAmount(int netBillAmount) {
+		this.netBillAmount = netBillAmount;
+	}
+
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

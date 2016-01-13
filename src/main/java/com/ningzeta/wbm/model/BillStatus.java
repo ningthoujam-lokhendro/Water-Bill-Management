@@ -14,11 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.ningzeta.wbm.util.BillStatusCode;
 
 @Entity
-@Table(name = "BILL_STATUS")
+@Table(name = "BILL_STATUS",uniqueConstraints = {
+		@UniqueConstraint(columnNames = "STATUS", name = "STATUS_IDX")
+})
 public class BillStatus {
 	
 	@Id

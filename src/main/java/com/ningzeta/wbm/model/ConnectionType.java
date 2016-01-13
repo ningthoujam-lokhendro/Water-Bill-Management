@@ -38,6 +38,9 @@ public class ConnectionType implements Serializable{
 	
 	@Column(name = "RATE",nullable = false)
 	private int rate;
+	
+	@Column(name = "RENTAL", nullable = false)
+	private int rental;
 
 	@Override
 	public String toString() {
@@ -94,6 +97,14 @@ public class ConnectionType implements Serializable{
 
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+
+	public int getRental() {
+		return rental;
+	}
+
+	public void setRental(int rental) {
+		this.rental = rental;
 	}
 
 }

@@ -2,9 +2,6 @@ package com.ningzeta.wbm.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -32,28 +28,22 @@ public class MeterReading implements Serializable{
 	@Column(name = "READING_DATE", nullable = false)
 	Date readingDate;
 	
-	@Column(name = "VALUE", nullable = false)
-	int value;
+	@Column(name = "UNIT", nullable = false)
+	int unit;
 	
-	@ManyToOne(fetch =FetchType.EAGER)
+	@ManyToOne(fetch =FetchType.LAZY)
 	@JoinColumn(name = "METER_ID", nullable = false, referencedColumnName = "METER_ID",
 			foreignKey = @ForeignKey(name = "FK_METER_ID"))
 	Meter meter;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "meterReading")
-	Set<WaterBill> waterBill = new HashSet<WaterBill>(0);
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PATTA_NUMBER", nullable = false, referencedColumnName="PATTA_NUMBER",
+			foreignKey = @ForeignKey(name = "FK_PATTA_NUMBER_MR"))
+	private Customer customer;
 
 	@Override
 	public String toString() {
-		return "MeterReading [id=" + id + ", readingDate=" + readingDate + ", value=" + value + "]";
-	}
-
-	public Set<WaterBill> getWaterBill() {
-		return waterBill;
-	}
-
-	public void setWaterBill(Set<WaterBill> waterBill) {
-		this.waterBill = waterBill;
+		return "MeterReading [id=" + id + ", readingDate=" + readingDate + ", value=" + unit + "]";
 	}
 
 	@Override
@@ -63,7 +53,7 @@ public class MeterReading implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((meter == null) ? 0 : meter.hashCode());
 		result = prime * result + ((readingDate == null) ? 0 : readingDate.hashCode());
-		result = prime * result + value;
+		result = prime * result + unit;
 		return result;
 	}
 
@@ -91,7 +81,7 @@ public class MeterReading implements Serializable{
 				return false;
 		} else if (!readingDate.equals(other.readingDate))
 			return false;
-		if (value != other.value)
+		if (unit != other.unit)
 			return false;
 		return true;
 	}
@@ -112,12 +102,12 @@ public class MeterReading implements Serializable{
 		this.readingDate = readingDate;
 	}
 
-	public int getValue() {
-		return value;
+	public int getUnit() {
+		return unit;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setUnit(int unit) {
+		this.unit = unit;
 	}
 
 	public Meter getMeter() {
@@ -126,6 +116,20 @@ public class MeterReading implements Serializable{
 
 	public void setMeter(Meter meter) {
 		this.meter = meter;
+	}
+
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

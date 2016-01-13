@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -74,7 +73,7 @@ public class Customer implements Serializable{
 			foreignKey = @ForeignKey(name = "FK_CONNECTION_TYPE"))
 	ConnectionType connectionType;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL )
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL )
 	Set<Meter> meter = new HashSet<Meter>(0);
 
 	public Set<Meter> getMeter() {

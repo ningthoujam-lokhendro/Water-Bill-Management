@@ -35,12 +35,12 @@ public class Meter implements Serializable{
 	@Column(name = "METER_ID")
 	private String meterId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false, referencedColumnName="ID",
-			foreignKey = @ForeignKey(name = "FK_CUSTOMER_ID"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PATTA_NUMBER", nullable = false, referencedColumnName="PATTA_NUMBER",
+			foreignKey = @ForeignKey(name = "FK_PATTA_NUMBER"))
 	private Customer customer;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "meter", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "meter", cascade=CascadeType.ALL)
 	private Set<MeterReading> meterReading = new HashSet<MeterReading>(0);
 
 	@Override

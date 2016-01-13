@@ -87,9 +87,13 @@ public class MainController {
 	
 	@RequestMapping(value = "/search/customer/{id}")
 	public String view(@PathVariable Long id, Model model) {
+		log.info("------ A --------");
 		Customer customer = this.customerService.findById(id);
+		log.info("------ B --------");
 		model.addAttribute("customer", customer);
+		log.info("------ C --------");
 		model.addAttribute("meter", customer.getMeter());
+		log.info("------ D --------");
 		return "customerinfo";
 	}
 	
