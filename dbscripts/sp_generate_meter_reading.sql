@@ -26,5 +26,6 @@ read_loop: LOOP
 			VALUES (curdate(),p_unit,pattaNumber,meterId);
 	
 	END loop read_loop;
+SELECT "DONE";
 END
 $$
