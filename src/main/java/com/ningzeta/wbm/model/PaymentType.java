@@ -45,17 +45,6 @@ public class PaymentType {
 	@Column(name = "DESCRIPTION")
 	@Enumerated(EnumType.STRING)
 	PaymentTypeCode paymentType;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "paymentType")
-	Set<Payment> payments = new HashSet<Payment>(0);
-
-	public Set<Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(Set<Payment> payments) {
-		this.payments = payments;
-	}
 
 	@Override
 	public int hashCode() {

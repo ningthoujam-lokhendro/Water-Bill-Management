@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/layout">
+<head>
+
+</head>
+<body>
+	<div class="container text-center" layout:fragment="content">
+	
+	<form class="form-inline" action="#" th:action="@{/generate/meterreading}" method="post">
+	  <div class="input-group col-xs-2">
+	  	<div class="input-group-addon">Unit Consumed</div>
+		<input type="text" class="form-control input-small" name="unit" id="unit" />
+	 </div>
+	 <button type="submit" class="btn btn-success">Generate Bill</button>
+	</form>
+	
+   </div>
+  
+</body>
+</html>

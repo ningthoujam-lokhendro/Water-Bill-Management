@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/layout">
+<head>
+</head>
+  <body>
+    
+    <div class="container" layout:fragment="content">
+    <form class="form-horizontal" action="#" th:action="@{/paybill}" method="post">
+		
+		<!-- Form Name -->
+		<legend class="text-center">Bill Payment</legend>
+		
+		<div class="form-group">
+		 <div class="col-sm-9">
+		 	<div class="input-group input-group-lg">
+		    	<span class="input-group-addon">Bill Number</span>
+				<input th:placeholder="${billnumber}" th:field="*{billnumber}" type="text" disabled="disabled" class="form-control input-small" />
+			</div>
+		 </div>
+		</div>
+		
+		<div class="form-group">
+		 <div class="col-sm-9">
+		 	<div class="input-group input-group-lg">
+		    	<span class="input-group-addon">Due Amount</span>
+				<input th:placeholder="${dueamount}" th:field="*{dueamount}" type="text" disabled="disabled" class="form-control input-small" />
+			</div>
+		 </div>
+		</div>
+
+		<div class="form-group">
+		 <div class="col-sm-9">
+		 	<div class="input-group input-group-lg">
+		    	<span class="input-group-addon">Amount to Pay</span>
+				<input th:placeholder="${dueamount}" th:field="*{payment.paidAmount}" type="text" class="form-control input-small" />
+			</div>
+		 </div>
+		</div>
+	 	<button type="submit" class="btn btn-primary btn-lg btn-block">Pay</button>
+	 	
+	</form>
+	</div>
+	
+   </body>
+</html>

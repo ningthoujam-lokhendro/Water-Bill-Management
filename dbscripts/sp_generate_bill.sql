@@ -12,7 +12,7 @@
 -- --------------------------------------------------------------------------------
 DELIMITER $$
 
-CREATE PROCEDURE `generate_bill` ()
+CREATE PROCEDURE `generate_bill` (IN fromDate DATE, IN toDate DATE)
 BEGIN
 DECLARE no_more_rows BOOLEAN;
 DECLARE no_more BOOLEAN;
@@ -21,7 +21,7 @@ DECLARE cus_id INT;
 DECLARE home_rate, home_rental, commercial_rate, commercial_rental INT;
 DECLARE local_rental,local_rate INT DEFAULT 0;
 DECLARE no_unit,reading_id INT;
-DECLARE to_period,from_period,due_date DATE;
+DECLARE due_date DATE;
 DECLARE amount_due,net_due,prev_due INT DEFAULT 0;
 
 DECLARE customer_cursor CURSOR FOR SELECT id,patta_number,connection_type FROM customer;
@@ -30,12 +30,10 @@ DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_more_rows = TRUE;
 SELECT rate,rental INTO home_rate,home_rental FROM connection_type where type='HOME';
 SELECT rate,rental INTO commercial_rate,commercial_rental FROM connection_type where type='COMMERCIAL';
 
-SET to_period = LAST_DAY(CURDATE());
-SET due_date = ADDDATE(to_period,INTERVAL 15 DAY);
-SET from_period = DATE_FORMAT(CURDATE(), '%Y-%m-01');
+SET due_date = ADDDATE(toDate,INTERVAL 15 DAY);
 
 call generate_due();
-call generate_meter_reading_temp();
+call generate_meter_reading_temp(fromDate,toDate);
 
 OPEN customer_cursor;
 
@@ -67,7 +65,7 @@ billing_loop : LOOP
 
 	INSERT INTO water_bill(`amount_due`,`due_date`,`net_bill_amount`,`period_from`,`period_to`,`previous_due`,
 							`customer_id`,`meter_reading`,`bill_status`)
-	VALUES(amount_due,due_date,net_due,from_period,to_period,prev_due,cus_id,reading_id,'DUE');
+	VALUES(amount_due,due_date,net_due,fromDate,toDate,prev_due,cus_id,reading_id,'DUE');
 
 	END LOOP billing_loop;
 SELECT "DONE";

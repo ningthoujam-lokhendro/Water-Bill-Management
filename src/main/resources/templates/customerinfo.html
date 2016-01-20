@@ -8,19 +8,19 @@
   
   	<div class="container" layout:fragment="content">
 	  <div class="jumbotron">
-	    <h1>Customer Information</h1>
-	     
-	    <p th:text=" 'Customer Name :' + ${customer.firstName} + ' ' + ${customer.lastName} "/>
-	    <p th:text=" 'Connection Type : ' + ${customer.connectionType.type}" />
-	    <p th:text=" 'Created on : ' + ${customer.creationDate} " />
-	    <p th:text=" 'Mobile Number : ' + ${customer.mobileNumber} " />
-	    <p th:text=" 'Landline Number : ' + ${customer.landLineNumber} " />
-	    <p th:text=" 'Ward Number : ' + ${customer.wardNumber} " />
-	    <p th:text=" 'Patta Number : ' + ${customer.pattaNumber} " />
-	    <p th:text=" 'Address : ' + ${customer.address} " />
-	    <p th:each="m,idx : ${meter}" 
-	    	th:text=" 'Meter-' + ${idx.count} +' : ' + ${m.meterId} " />
-	    
+	    <h3>Customer Information</h3>
+	    <dl class="dl-horizontal">
+	    	<dt>Customer Name :</dt><dd th:text="${customer.firstName} +' '+${customer.lastName}" />
+	    	<dt>Connection Type :</dt><dd th:text="${customer.connectionType.type}" />
+	    	<dt>Mobile Number :</dt><dd th:text="${customer.mobileNumber}" />
+	    	<dt>Landline Number :</dt><dd th:text="${customer.mobileNumber}" />
+	    	<dt>Mobile Number :</dt><dd th:text="${customer.landLineNumber}" />
+	    	<dt>Ward Number :</dt><dd th:text="${customer.wardNumber}" />
+	    	<dt>Patta Number :</dt><dd th:text="${customer.pattaNumber}" />
+	    	<dt>Address :</dt><dd th:text="${customer.address}" />
+	    	<dt>Meter :</dt><dd th:each="m,idx : ${meter}" 
+	    			th:text="${m.meterId}" />
+	    </dl> 
 	    
 	    <a th:href="@{/update(id=${customer.id})}" role="button" class="btn btn-lg btn-danger">
 	    	<span class="glyphicon glyphicon-minus-sign"></span>
@@ -40,6 +40,45 @@
 	    
 	    <br/>
 	  </div>
+	  
+	  <table class="table table-bordered table-striped">
+	     <thead>
+	      <tr>
+	      	<th>From</th>
+	      	<th>To</th>
+	      	<th>Due Date</th>
+	      	<th>Previous Due</th>
+	        <th>Amount Due</th>
+	        <th>Total Due</th>
+	        <th>Status</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      <tr>
+	      	<td class="text-center" th:text="${waterbill.periodFrom}" />
+	        <td class="text-center" th:text="${waterbill.periodTo}" />
+	        <td class="text-center" th:text="${waterbill.dueDate}" />
+	        <td class="text-center" th:text="${waterbill.previousDue}" />
+	        <td class="text-center" th:text="${waterbill.amountDue}" />
+	        <td class="text-center" th:text="${waterbill.netBillAmount}" />
+	        <td class="text-center" th:if="${duestatus} == true">
+	        	<a 	th:href="@{/paybill(billnumber=${waterbill.id},dueamount=${waterbill.netBillAmount})}" 
+	        		class="btn btn-info" role="button">
+	        		Pay
+	        		<span class="glyphicon glyphicon-usd"></span>
+	        	</a>
+	        </td>
+	        <td class="text-center" th:if="${duestatus} == false">
+	        	<a href="#" class="btn btn-info" role="button">
+	        		Detail
+	        		<span class="glyphicon glyphicon-eye-open"></span>
+	        	</a>
+	        </td>
+	      </tr>
+	      </tbody>
+	    </table>
+	    <div th:text="${waterbill}"></div>
+	  
 	 </div>
 
   </body>

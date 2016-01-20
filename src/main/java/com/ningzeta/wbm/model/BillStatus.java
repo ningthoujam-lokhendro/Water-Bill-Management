@@ -1,5 +1,6 @@
 package com.ningzeta.wbm.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +23,10 @@ import com.ningzeta.wbm.util.BillStatusCode;
 @Table(name = "BILL_STATUS",uniqueConstraints = {
 		@UniqueConstraint(columnNames = "STATUS", name = "STATUS_IDX")
 })
-public class BillStatus {
+public class BillStatus implements Serializable{
 	
+	private static final long serialVersionUID = 7225402870052809155L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "BILL_STATUS_SEQ")
 	@SequenceGenerator(name = "BILL_STATUS_SEQ", sequenceName = "BILL_STATUS_SEQ")
@@ -33,7 +36,7 @@ public class BillStatus {
 	@Enumerated(EnumType.STRING)
 	BillStatusCode billStatusCode;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "status")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
 	Set<WaterBill> waterBill = new HashSet<WaterBill>(0);
 
 	public Set<WaterBill> getWaterBill() {

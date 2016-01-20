@@ -29,17 +29,6 @@ public class PaymentStatusCode {
 	@Column(name = "DESCRIPTION", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "paymentStatusCode")
-	Set<Payment> payments = new HashSet<Payment>(0);
-
-	public Set<Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(Set<Payment> payments) {
-		this.payments = payments;
-	}
 
 	@Override
 	public int hashCode() {

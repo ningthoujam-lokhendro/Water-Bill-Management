@@ -33,18 +33,18 @@ public class Payment implements Serializable {
 	@Column(name = "PAID_AMOUNT", nullable = false)
 	int paidAmount;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_PAYEMENT_STATUS_CODE", nullable = false,
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PAYEMENT_STATUS", nullable = false, referencedColumnName = "DESCRIPTION",
 			foreignKey = @ForeignKey(name = "FK_PAYEMENT_STATUS_CODE"))
 	PaymentStatusCode paymentStatusCode;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_PAYMENT_TYPE", nullable = false,
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PAYMENT_TYPE", nullable = false, referencedColumnName = "DESCRIPTION",
 			foreignKey = @ForeignKey(name = "FK_PAYMENT_TYPE"))
 	PaymentType paymentType;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "REF_WATER_BILL", nullable = false,
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "WATER_BILL", nullable = false,
 			foreignKey = @ForeignKey(name = "FK_WATER_BILL"))
 	private WaterBill waterBill;
 
